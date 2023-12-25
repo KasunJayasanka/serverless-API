@@ -15,6 +15,9 @@ plugins:
 package:
     individually: true
 
+custom:
+    tableName: player-points
+
 functions:
     getUser:
         handler: lambdas/getUser.handler
@@ -24,4 +27,17 @@ functions:
                   method: GET
                   cors: true
 
-
+resources:
+    Resources:
+        MyDynamoDbTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: ${self:custom.tableName}
+                AttributeDefinitions:
+                    - AttributeName: ID
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: ID
+                      KeyType: HASH
+                BillingMode: PAY_PER_REQUEST
+        
