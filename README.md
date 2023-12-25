@@ -67,3 +67,33 @@ To deploy the API, run the following commands:
 npm install
 serverless deploy
 ```
+
+This will deploy the API to AWS Lambda and create the DynamoDB table.
+
+### Endpoints
+
+#### Get User
+
+- Method: `GET`
+- Path: `/get-user/{ID}`
+- Example: `/get-user/123`
+
+#### Get Player Score
+
+- Method: `GET`
+- Path: `/get-player-score/{ID}`
+- Example: `/get-player-score/456`
+
+##### Create Player Score
+
+- Method: `POST`
+- Path: `/create-player-score/{ID}`
+- Example: `/create-player-score/789`
+
+### Dependencies
+
+- [serverless-webpack:](https://www.serverless.com/plugins/serverless-plugin-webpack) Plugin for bundling with Webpack.
+
+### License
+
+- This project is licensed under the [MIT License](https://opensource.org/license/mit/).
