@@ -27,6 +27,7 @@ provider:
   profile: serverlessUser
   stage: dev
   region: ap-southeast-1
+```
 
 ### DynamoDB Configuration
 
