@@ -38,3 +38,32 @@ You can change the table name in the `serverless.yml` file under custom:
 ```yaml
 custom:
   tableName: player-points
+```
+
+The DynamoDB table configuration is defined in the `serverless.yml` file under resources:
+
+```yaml
+resources:
+  Resources:
+    MyDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+```
+
+### Deployment
+
+To deploy the API, run the following commands:
+
+```bash
+npm install
+serverless deploy
+```
