@@ -27,3 +27,8 @@ provider:
   profile: serverlessUser
   stage: dev
   region: ap-southeast-1
+
+### DynamoDB Configuration
+
+A DynamoDB table named `player-points` will be created with the necessary configuration. 
+You can change the table name in the `serverless.yml` file under custom:
