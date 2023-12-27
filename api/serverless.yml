@@ -7,14 +7,18 @@ provider:
     runtime: nodejs18.x
     profile: serverlessUser
     stage: dev
-    region: ap-southeast-1
+    # region: ap-southeast-1
     environment:
         tableName: ${self:custom.tableName}
+        bucketName: ${self:custom.bucketName}
     iamRoleStatements:
         - Effect: Allow
           Action:
               - dynamodb:* 
-          Resource: '*' 
+              - s3:*
+          Resource: '*'
+    apiKeys:
+        - MFApiKey 
 
 plugins:
     - serverless-webpack
@@ -24,6 +28,10 @@ package:
 
 custom:
     tableName: player-points
+    bucketName: myserverlessprojectuploadbucketkj-768287889 
+    s3Sync:
+        - bucktName: ${self:custom.bucketName}
+          localDir: UploadData
 
 functions:
     getUser:
@@ -33,6 +41,7 @@ functions:
                   path: get-user/{ID}
                   method: GET
                   cors: true
+                  private: true
     getPlayerPoints:
         handler: lambdas/endpoints/getPlayerScore.handler
         events:
@@ -47,9 +56,31 @@ functions:
                   path: create-player-score/{ID}
                   method: POST
                   cors: true
+    createFile:
+        handler: lambdas/endpoints/createFile.handler
+        events:
+            - http:
+                  path: create-file/{fileName}
+                  method: POST
+                  cors: true
+    getFile:
+        handler: lambdas/endpoints/getFile.handler
+        events:
+            - http:
+                  path: create-file/{fileName}
+                  method: POST
+                  cors: true
 
 resources:
     Resources:
+        DemoBucketUpload:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: myserverlessprojectuploadbucket-kj-12312
+        # FileUploadToBucket:
+        #     Type: AWS::S3::Bucket
+        #     Properties:
+        #         TableName: ${self:custom.bucketName}
         MyDynamoDbTable:
             Type: AWS::DynamoDB::Table
             Properties:
